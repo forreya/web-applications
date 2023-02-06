@@ -18,7 +18,7 @@ describe Application do
 
   context 'POST to /submit' do
     it 'returns 200 OK with the right content' do
-      response = post('./submit', name: "Ryan", submission: "I am secretly a kaeru.")
+      response = post('/submit', name: "Ryan", submission: "I am secretly a kaeru.")
 
       expect(response.status).to eq 200
       expect(response.body).to eq "Thanks Ryan, here is your submission: 'I am secretly a kaeru.'"
@@ -27,17 +27,36 @@ describe Application do
 
   context 'GET to /howdy' do
     it 'returns a howdy message to Ryan' do
-      response = get('./howdy', name: "Ryan")
+      response = get('/howdy', name: "Ryan")
 
       expect(response.status).to eq 200
       expect(response.body).to eq "Howdy, Ryan."
     end
 
     it 'returns a howdy message to ForReya' do
-      response = get('./howdy', name: "ForReya")
+      response = get('/howdy', name: "ForReya")
 
       expect(response.status).to eq 200
       expect(response.body).to eq "Howdy, ForReya."
     end
   end
+
+  context 'GET to /names' do
+    it 'returns a list of the names' do
+      response = get('/names', names: 'Mononoke, Chihiro, Totoro.')
+
+      expect(response.status).to eq 200
+      expect(response.body).to eq "Mononoke, Chihiro, Totoro."
+    end
+  end
+
+  context 'POST to /sort-names' do
+    it 'return a alphabetically sorted list of the names' do
+      response = post('/sort-names', names: 'Joe,Alice,Zoe,Julia,Kieran')
+
+      expect(response.status).to eq 200
+      expect(response.body).to eq "Alice,Joe,Julia,Kieran,Zoe"
+    end
+  end
+
 end

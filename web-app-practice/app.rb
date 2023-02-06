@@ -31,4 +31,17 @@ class Application < Sinatra::Base
 
     "Thanks #{name}, here is your submission: '#{submission}'"
   end
+
+  get '/names' do
+    names = params[:names]
+
+    names
+  end
+
+  post '/sort-names' do
+    names = params[:names]
+
+    names.split(',').sort.join(',')
+  end
+
 end
