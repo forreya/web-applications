@@ -13,7 +13,7 @@ class Application < Sinatra::Base
     "Welcome to the #{cohort} cohort, #{name}."
   end
 
-  get '/hello' do
+  get '/howdy' do
     name = params[:name]
 
     "Howdy, #{name}."
