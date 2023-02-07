@@ -32,8 +32,8 @@ describe Application do
       response = get('/albums')
 
       expect(response.status).to eq 200
-      expect(response.body).to include('<h1>Albums</h1>')
-      expect(response.body).to include('Title: Bossanova')
+      expect(response.body).to include('<h1>Albums</h1>') 
+      expect(response.body).to include('Title: Doolittle')
       expect(response.body).to include('Title: Folklore')
     end
   end
@@ -54,11 +54,13 @@ describe Application do
   end
 
   context 'GET to /artists' do
-    it 'returns a list of all artists' do
+    it 'returns a list of all artists in HTML form' do
       response = get('/artists')
 
       expect(response.status).to eq 200
-      expect(response.body).to eq 'Pixies, ABBA, Taylor Swift, Nina Simone'
+      expect(response.body).to include('<h1>Artists</h1>') 
+      expect(response.body).to include('Name: Taylor Swift')
+      expect(response.body).to include('Name: Nina Simone')
     end
   end
 
@@ -71,7 +73,7 @@ describe Application do
       expect(response.status).to eq 200
 
       response = get('/artists')
-      expect(response.body).to eq 'Pixies, ABBA, Taylor Swift, Nina Simone, Teresa Teng'
+      expect(response.body).to include('Name: Teresa Teng')
     end
   end
 
@@ -92,7 +94,28 @@ describe Application do
       expect(response.body).to include('<h1>Surfer Rosa</h1>')
       expect(response.body).to include('Release year: 1988')
       expect(response.body).to include('Artist: Pixies')
+
     end
   end
+
+  context 'GET to /artists/:id' do
+    it 'returns HTML content displaying information on the artist for ID 1' do
+      response = get('/artists/1')
+
+      expect(response.status).to eq 200
+      expect(response.body).to include('<h1>Pixies</h1>')
+      expect(response.body).to include('Genre: Rock')
+    end
+
+    it 'returns HTML content displaying information on the album for ID 2' do
+      response = get('/artists/2')
+  
+      expect(response.status).to eq 200
+      expect(response.body).to include('<h1>ABBA</h1>')
+      expect(response.body).to include('Genre: Pop')
+
+    end
+  end
+
 
 end
