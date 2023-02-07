@@ -21,11 +21,13 @@ class Application < Sinatra::Base
     artist_id = params[:artist_id]
 
     album_repository = AlbumRepository.new
-    new_album = Album.new
-    new_album.title = title
-    new_album.release_year = release_year
-    new_album.artist_id = artist_id
-    album_repository.create(new_album)
+    @new_album = Album.new
+    @new_album.title = title
+    @new_album.release_year = release_year
+    @new_album.artist_id = artist_id
+    album_repository.create(@new_album)
+
+    return erb(:album_success)
     
   end
 
@@ -41,11 +43,20 @@ class Application < Sinatra::Base
     genre = params[:genre]
 
     artist_repository = ArtistRepository.new
-    new_artist = Artist.new
-    new_artist.name = name
-    new_artist.genre = genre
-    artist_repository.create(new_artist)
+    @new_artist = Artist.new
+    @new_artist.name = name
+    @new_artist.genre = genre
+    artist_repository.create(@new_artist)
     
+    return erb(:artist_success)
+  end
+
+  get '/albums/new' do
+    return erb(:albums_new)
+  end
+
+  get '/artists/new' do
+    return erb(:artists_new)
   end
 
   get '/albums/:id' do

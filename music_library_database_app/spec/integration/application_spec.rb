@@ -27,6 +27,24 @@ describe Application do
     reset_artists_table
   end
 
+  context 'GET to /albums/new' do
+    it 'sends a POST request to /albums' do
+      response = get('/albums/new')
+
+      expect(response.status).to eq 200
+      expect(response.body).to include('<form action="/albums" method="POST">')
+    end
+  end
+
+  context 'GET to /artists/new' do
+    it 'sends a POST request to /artists' do
+      response = get('/artists/new')
+
+      expect(response.status).to eq 200
+      expect(response.body).to include('<form action="/artists" method="POST">')
+    end
+  end
+
   context 'GET to /albums' do
     it 'returns a list of all albums in HTML form' do
       response = get('/albums')
@@ -46,6 +64,7 @@ describe Application do
 
       response = post('/albums', title: title, release_year: release_year, artist_id: artist_id)
       expect(response.status).to eq 200
+      expect(response.body).to include('<h1>Album created: Voyage</h1>')
 
       response = get('/albums')
       expect(response.body).to include('Title: Voyage')
@@ -116,6 +135,4 @@ describe Application do
 
     end
   end
-
-
 end
