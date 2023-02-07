@@ -8,7 +8,7 @@ class PostManager
   end
 
   def add_post(post)
-    @posts << post
+    @posts.push(post)
   end
 
   def all_posts
@@ -16,8 +16,10 @@ class PostManager
   end
 
   def all_posts_by_tag(tag)
-    @posts.select do |post|
-      post.title.include?(tag)
+    tagged_posts = @posts.select do |post|
+      post.tags.include?(tag)
     end
+
+    tagged_posts
   end
 end

@@ -16,7 +16,7 @@ describe Application do
         response = get('/')
 
         expect(response.status).to eq(200)
-        expect(response.body).to include('<form method="post" action="/posts">')
+        expect(response.body).to include('<form method="POST" action="/posts">')
         expect(response.body).to include('<input type="text" name="title" />')
         expect(response.body).to include('<input type="text" name="content" />')
         expect(response.body).to include('<input type="text" name="tags" />')
@@ -25,7 +25,7 @@ describe Application do
 
     context 'POST /' do
       it 'should add the new post' do
-        _response = post(
+        response = post(
           '/posts',
           title: 'A new post',
           content: 'Hi there',
@@ -33,7 +33,6 @@ describe Application do
         )
 
         response = get('/')
-
         expect(response.body).to include('<h3>A new post</h3>')
       end
     end
