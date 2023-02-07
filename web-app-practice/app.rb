@@ -14,9 +14,9 @@ class Application < Sinatra::Base
   end
 
   get '/howdy' do
-    name = params[:name]
+    @name = params[:name]
 
-    "Howdy, #{name}."
+    return erb(:howdy)
   end
 
   post '/posts' do

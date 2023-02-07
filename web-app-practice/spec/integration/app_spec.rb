@@ -30,14 +30,14 @@ describe Application do
       response = get('/howdy', name: "Ryan")
 
       expect(response.status).to eq 200
-      expect(response.body).to eq "Howdy, Ryan."
+      expect(response.body).to include('<h1>Howdy, Ryan!</h1>')
     end
 
     it 'returns a howdy message to ForReya' do
       response = get('/howdy', name: "ForReya")
 
       expect(response.status).to eq 200
-      expect(response.body).to eq "Howdy, ForReya."
+      expect(response.body).to include('<h1>Howdy, ForReya!</h1>')
     end
   end
 
