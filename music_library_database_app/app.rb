@@ -15,15 +15,6 @@ class Application < Sinatra::Base
     also_reload 'lib/artist_repository'
   end
 
-  get '/albums' do
-    album_repository = AlbumRepository.new
-    all_albums = album_repository.all.map {
-      |album|
-      album.title
-    }.join(', ')
-    all_albums
-  end
-
   post '/albums' do
     title = params[:title]
     release_year = params[:release_year]
@@ -59,4 +50,26 @@ class Application < Sinatra::Base
     
   end
 
+  get '/albums/:id' do
+    id = params[:id]
+    album_repository = AlbumRepository.new
+    album = album_repository.find(id)
+
+    @title = album.title
+    @release_year = album.release_year
+    @artist_id = album.artist_id
+
+    artist_repository = ArtistRepository.new
+    artist = artist_repository.find(@artist_id)
+    @artist_name = artist.name
+
+    return erb(:albums_id)
+  end
+
+  get '/albums' do
+    album_repository = AlbumRepository.new
+    @all_albums = album_repository.all
+
+    return erb(:albums)
+  end
 end

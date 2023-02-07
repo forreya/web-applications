@@ -28,11 +28,13 @@ describe Application do
   end
 
   context 'GET to /albums' do
-    it 'returns a list of all albums' do
+    it 'returns a list of all albums in HTML form' do
       response = get('/albums')
 
       expect(response.status).to eq 200
-      expect(response.body).to eq 'Doolittle, Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring'
+      expect(response.body).to include('<h1>Albums</h1>')
+      expect(response.body).to include('Title: Bossanova')
+      expect(response.body).to include('Title: Folklore')
     end
   end
 
@@ -46,7 +48,8 @@ describe Application do
       expect(response.status).to eq 200
 
       response = get('/albums')
-      expect(response.body).to eq 'Doolittle, Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring, Voyage'
+      expect(response.body).to include('Title: Voyage')
+      expect(response.body).to include('Released: 2022')
     end
   end
 
@@ -71,4 +74,25 @@ describe Application do
       expect(response.body).to eq 'Pixies, ABBA, Taylor Swift, Nina Simone, Teresa Teng'
     end
   end
+
+  context 'GET to /albums/:id' do
+    it 'returns HTML content displaying information on the album for ID 1' do
+      response = get('/albums/1')
+
+      expect(response.status).to eq 200
+      expect(response.body).to include('<h1>Doolittle</h1>')
+      expect(response.body).to include('Release year: 1989')
+      expect(response.body).to include('Artist: Pixies')
+    end
+
+    it 'returns HTML content displaying information on the album for ID 2' do
+      response = get('/albums/2')
+  
+      expect(response.status).to eq 200
+      expect(response.body).to include('<h1>Surfer Rosa</h1>')
+      expect(response.body).to include('Release year: 1988')
+      expect(response.body).to include('Artist: Pixies')
+    end
+  end
+
 end
